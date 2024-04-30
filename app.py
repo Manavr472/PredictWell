@@ -137,7 +137,7 @@ def main():
                 st.write("Based on the input data, it is likely that you DO NOT HAVE Kidney Disease.")
                 st.image(healthy, caption='healthy')
             elif kd_prediction == 1:
-                st.write("Based on the input data, it is likely that you HAVE Kidney Disease.")
+                st.write("Based on the input data, it is you HAVE Kidney Disease.")
                 st.image(unhealthy, caption='unhealthy')
         
         
