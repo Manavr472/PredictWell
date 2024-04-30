@@ -3,6 +3,7 @@ import pandas as pd
 import tensorflow as tf
 from tensorflow import keras
 import numpy as np
+from PIL import Image
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 import pickle
@@ -24,11 +25,15 @@ kidney_model, diabetes_model, heart_model = load_models()
 
 # Streamlit app
 def main():
+    
     st.title('PredictWell: Chronic Disease Predictor')
 
     # Sidebar navigation
     st.sidebar.title('PredictWell')
     selected_disease = st.sidebar.radio('Select Disease:', ['Kidney Disease', 'Heart Disease', 'Diabetes'])
+    
+    healthy = Image.open("./cards/ok.png")
+    unhealthy = Image.open("./cards/help.png")
 
     if selected_disease == 'Kidney Disease':
         st.subheader('Kidney Disease Prediction')
@@ -129,9 +134,11 @@ def main():
             kd_prediction = predict_kidney(kd_age,kd_bp,kd_al,kd_su,kd_ba,kd_bgr,kd_bu,kd_sc,kd_sod,kd_pot,kd_hemo,kd_pcv,kd_wc,kd_rc,kd_htn,kd_dm,kd_cad,kd_appet)
             print(kd_prediction)
             if kd_prediction == 0:
-                st.write("Based on the input data, it is likely that you do not have Kidney Disease.")
+                st.write("Based on the input data, it is likely that you DO NOT HAVE Kidney Disease.")
+                st.image(healthy, caption='healthy')
             elif kd_prediction == 1:
-                st.write("Based on the input data, it is likely that you have Kidney Disease.")
+                st.write("Based on the input data, it is likely that you HAVE Kidney Disease.")
+                st.image(unhealthy, caption='unhealthy')
         
         
 
@@ -185,9 +192,11 @@ def main():
             prediction = predict_heart_disease(age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpeak, slope, ca, thal)
             print(prediction)
             if prediction >= 0.5:
-                st.write("Based on the input data, it is likely that you have heart disease.")
+                st.write("Based on the input data, it is likely that you HAVE heart disease.")
+                st.image(unhealthy, caption='unhealthy')
             else:
-                st.write("Based on the input data, it is likely that you do not have heart disease.")
+                st.write("Based on the input data, it is likely that you DO NOT HAVE heart disease.")
+                st.image(healthy, caption='healthy')
 
     #Heart diaseases prediction Ends
 
@@ -248,9 +257,12 @@ def main():
             db_prediction = predict_diabetes(db_sex, db_age, db_ht, db_hd, db_sh, db_bmi, db_hgb, db_fbs)
             print(db_prediction)
             if db_prediction == 0:
-                st.write("Based on the input data, it is likely that you do not have Diabetes.")
+                st.write("Based on the input data, it is likely that you DO NOT HAVE Diabetes.")
+                st.image(healthy, caption='healthy')
             elif db_prediction == 1:
-                st.write("Based on the input data, it is likely that you have Diabetes.")
+                st.write("Based on the input data, it is likely that you HAVE Diabetes.")
+                st.image(unhealthy, caption='unhealthy')
+                st.show()
 
 
 
