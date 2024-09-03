@@ -11,17 +11,37 @@ import joblib
 
 @st.cache_resource
 def load_models():
-    with open('./models/RandomForest_Kidney_model.pkl', 'rb') as file:
-        kidney_model = joblib.load(file)
+    try:
+        # Load the Kidney model
+        with open('models/RandomForest_Kidney_model.pkl', 'rb') as file:
+            kidney_model = joblib.load(file)
+    except Exception as e:
+        st.error(f"Error loading Kidney model: {e}")
+        return None, None, None
 
-    with open('./models/Decision_tree_diabetes_model.pkl', 'rb') as file:
-        diabetes_model = joblib.load(file)
+    try:
+        # Load the Diabetes model
+        with open('models/Decision_tree_diabetes_model.pkl', 'rb') as file:
+            diabetes_model = joblib.load(file)
+    except Exception as e:
+        st.error(f"Error loading Diabetes model: {e}")
+        return None, None, None
 
-    heart_model = keras.models.load_model('./models/heart_disease_model.hdf5')
+    try:
+        # Load the Heart Disease model
+        heart_model = keras.models.load_model('models/heart_disease_model.hdf5')
+    except Exception as e:
+        st.error(f"Error loading Heart Disease model: {e}")
+        return None, None, None
 
     return kidney_model, diabetes_model, heart_model
 
+# Load models
 kidney_model, diabetes_model, heart_model = load_models()
+
+# Check if models were loaded successfully
+if not all([kidney_model, diabetes_model, heart_model]):
+    st.stop()
 
 
 # Streamlit app
