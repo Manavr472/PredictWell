@@ -10,13 +10,13 @@ import pickle
 
 @st.cache_resource
 def load_models():
-    with open('models/RandomForest_Kidney_model.pkl', 'rb') as file:
+    with open('./models/RandomForest_Kidney_model.pkl', 'rb') as file:
         kidney_model = pickle.load(file)
 
-    with open('models/Decision_tree_diabetes_model.pkl', 'rb') as file:
+    with open('./models/Decision_tree_diabetes_model.pkl', 'rb') as file:
         diabetes_model = pickle.load(file)
         
-    heart_model = keras.models.load_model('models/heart_disease_model.hdf5')
+    heart_model = keras.models.load_model('./models/heart_disease_model.hdf5')
 
     return kidney_model, diabetes_model, heart_model
 
