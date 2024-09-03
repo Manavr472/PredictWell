@@ -3,4 +3,4 @@ pandas
 tensorflow
 numpy
 Pillow
-scikit-learn==0.23
+scikit-learn
