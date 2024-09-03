@@ -7,15 +7,16 @@ from PIL import Image
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 import pickle
+import joblib
 
 @st.cache_resource
 def load_models():
     with open('./models/RandomForest_Kidney_model.pkl', 'rb') as file:
-        kidney_model = pickle.load(file)
+        kidney_model = joblib.load(file)
 
     with open('./models/Decision_tree_diabetes_model.pkl', 'rb') as file:
-        diabetes_model = pickle.load(file)
-        
+        diabetes_model = joblib.load(file)
+
     heart_model = keras.models.load_model('./models/heart_disease_model.hdf5')
 
     return kidney_model, diabetes_model, heart_model
